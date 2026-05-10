@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE TONE ROOM — Brush art! Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    /* Brush Art Studio brand colors */
+    --purple:   #7b3ace;
+    --dark-navy:#1f1b37;
+    --cream:    #f5f0e0;
+    --orange:   #ef7d00;
+    --pink:     #c12667;
+    --lime:     #bccf21;
+    --white:    #ffffff;
+
+    --body-bg:  #f5f0e0;
+    --text-dark: #1f1b37;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--body-bg);
+    color: var(--text-dark);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ─── LOGO SVG ─── */
+  .logo-svg { display: block; }
+
+  /* ─── COVER ─── */
+  .cover {
+    background: var(--dark-navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 60px 60px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover-bg-blob {
+    position: absolute;
+    top: -120px; right: -100px;
+    width: 500px; height: 500px;
+    background: var(--purple);
+    border-radius: 50% 30% 60% 40%;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .cover-bg-blob2 {
+    position: absolute;
+    bottom: -80px; left: -60px;
+    width: 300px; height: 300px;
+    background: var(--orange);
+    border-radius: 60% 40% 50% 30%;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .cover-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  /* Brush art! logo text — replicated from brand */
+  .logo-mark {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    position: relative;
+  }
+  .logo-mark .brush { color: var(--purple); }
+  .logo-mark .dot { color: var(--purple); }
+
+  .cover-badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream);
+    opacity: 0.5;
+    margin-top: 6px;
+  }
+
+  .cover-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 0 30px;
+  }
+
+  .cover-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 24px;
+  }
+  .cover-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px; height: 2px;
+    background: var(--orange);
+  }
+
+  .cover-title {
+    font-weight: 900;
+    font-size: clamp(56px, 12vw, 130px);
+    line-height: 0.88;
+    letter-spacing: -0.03em;
+    color: var(--cream);
+    margin-bottom: 12px;
+  }
+  .cover-title .highlight {
+    color: var(--purple);
+    display: block;
+  }
+
+  .cover-subtitle {
+    font-size: clamp(12px, 2vw, 16px);
+    font-weight: 400;
+    color: var(--cream);
+    opacity: 0.55;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 28px;
+    margin-bottom: 36px;
+  }
+
+  .cover-pill {
+    display: inline-block;
+    background: var(--purple);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 10px 24px;
+    border-radius: 100px;
+  }
+
+  .cover-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid rgba(245,240,224,0.1);
+    padding-top: 28px;
+  }
+  .cover-bottom-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(245,240,224,0.35);
+  }
+  .cover-channels {
+    display: flex;
+    gap: 18px;
+  }
+  .channel-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream);
+    opacity: 0.4;
+  }
+  .channel-tag.active { color: var(--lime); opacity: 1; }
+
+  /* ─── SECTION LAYOUT ─── */
+  .section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 80px 50px;
+  }
+
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 20px;
+  }
+  .section-tag-num {
+    background: var(--purple);
+    color: white;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 800;
+  }
+
+  .section-title {
+    font-weight: 900;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    color: var(--dark-navy);
+  }
+  .section-title .accent { color: var(--purple); }
+
+  .section-body {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(31,27,55,0.65);
+    max-width: 640px;
+    line-height: 1.8;
+  }
+
+  .divider {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--purple), var(--orange), var(--lime));
+    opacity: 0.25;
+  }
+
+  /* ─── BAND SECTION (dark) ─── */
+  .band {
+    background: var(--dark-navy);
+    padding: 80px 0;
+  }
+  .band .section-title { color: var(--cream); }
+  .band .section-body { color: rgba(245,240,224,0.55); }
+  .band .section-tag { color: var(--purple); }
+
+  /* ─── OBJECTIVES ─── */
+  .obj-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3px;
+    margin-top: 44px;
+  }
+  .obj-card {
+    background: var(--dark-navy);
+    padding: 28px 26px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .obj-card:hover { transform: translateY(-3px); }
+  .obj-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--purple);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .obj-card:hover::after { transform: scaleX(1); }
+  .obj-card:nth-child(2)::after { background: var(--orange); }
+  .obj-card:nth-child(3)::after { background: var(--pink); }
+  .obj-card:nth-child(4)::after { background: var(--lime); }
+  .obj-card:nth-child(5)::after { background: var(--orange); }
+  .obj-card:nth-child(6)::after { background: var(--purple); }
+
+  .obj-n {
+    font-weight: 900;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--purple);
+    opacity: 0.18;
+    margin-bottom: 10px;
+  }
+  .obj-card:nth-child(2) .obj-n { color: var(--orange); }
+  .obj-card:nth-child(3) .obj-n { color: var(--pink); }
+  .obj-card:nth-child(4) .obj-n { color: var(--lime); }
+  .obj-card:nth-child(5) .obj-n { color: var(--orange); }
+
+  .obj-text {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(245,240,224,0.8);
+    line-height: 1.7;
+  }
+
+  /* ─── DELIVERABLES ─── */
+  .deliv-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-top: 44px;
+  }
+  .deliv-card {
+    border: 2px solid rgba(31,27,55,0.1);
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    background: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .deliv-card:hover {
+    border-color: var(--purple);
+    box-shadow: 0 8px 40px rgba(123,58,206,0.12);
+  }
+  .deliv-num {
+    font-weight: 900;
+    font-size: 80px;
+    line-height: 1;
+    color: var(--purple);
+    margin-bottom: 6px;
+    letter-spacing: -0.04em;
+  }
+  .deliv-card:nth-child(2) .deliv-num { color: var(--orange); }
+  .deliv-card:nth-child(3) .deliv-num { color: var(--pink); }
+  .deliv-name {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dark-navy);
+    margin-bottom: 10px;
+  }
+  .deliv-desc {
+    font-size: 12px;
+    color: rgba(31,27,55,0.5);
+    line-height: 1.7;
+  }
+
+  /* ─── CONTENT SCOPE ─── */
+  .scope-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-top: 44px;
+  }
+  .scope-col {
+    background: white;
+    padding: 36px 32px;
+  }
+  .scope-col-head {
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--dark-navy);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .scope-col-head span { color: var(--purple); }
+  .scope-col:nth-child(2) .scope-col-head span { color: var(--orange); }
+  .scope-divider {
+    width: 40px; height: 3px;
+    background: var(--purple);
+    margin-bottom: 22px;
+  }
+  .scope-col:nth-child(2) .scope-divider { background: var(--orange); }
+  .scope-list { list-style: none; }
+  .scope-list li {
+    font-size: 12.5px;
+    color: rgba(31,27,55,0.65);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(31,27,55,0.07);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .scope-list li::before {
+    content: '▸';
+    color: var(--purple);
+    font-size: 10px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .scope-col:nth-child(2) .scope-list li::before { color: var(--orange); }
+
+  /* ─── EQUIPMENT ─── */
+  .eq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-top: 44px;
+  }
+  .eq-card {
+    background: white;
+    padding: 28px 30px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .eq-dot {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--purple);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .eq-card:nth-child(2) .eq-dot { background: var(--orange); }
+  .eq-card:nth-child(3) .eq-dot { background: var(--pink); }
+  .eq-card:nth-child(4) .eq-dot { background: var(--lime); }
+  .eq-title { font-size: 13px; font-weight: 700; color: var(--dark-navy); margin-bottom: 3px; }
+  .eq-sub { font-size: 11.5px; color: rgba(31,27,55,0.5); }
+
+  /* ─── PROCESS STEPS ─── */
+  .steps { margin-top: 50px; }
+  .step {
+    display: flex;
+    gap: 28px;
+    margin-bottom: 0;
+    position: relative;
+  }
+  .step:not(:last-child) .step-line {
+    position: absolute;
+    left: 22px;
+    top: 44px;
+    bottom: 0;
+    width: 2px;
+    background: rgba(245,240,224,0.1);
+  }
+  .step-circle {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--purple);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 16px;
+    color: white;
+    flex-shrink: 0;
+    position: relative; z-index: 1;
+  }
+  .step:nth-child(2) .step-circle { background: var(--orange); }
+  .step:nth-child(3) .step-circle { background: var(--pink); }
+  .step:nth-child(4) .step-circle { background: var(--lime); color: var(--dark-navy); }
+  .step:nth-child(5) .step-circle { background: var(--purple); }
+
+  .step-body { padding: 8px 0 44px; flex: 1; }
+  .step:last-child .step-body { padding-bottom: 0; }
+  .step-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+  }
+  .step-text { font-size: 12.5px; color: rgba(245,240,224,0.5); line-height: 1.8; }
+
+  /* ─── INVESTMENT ─── */
+  .investment-wrap {
+    margin-top: 44px;
+  }
+  .investment-main {
+    background: var(--purple);
+    padding: 70px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .investment-main::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 280px; height: 280px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .investment-main::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 200px; height: 200px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 50%;
+  }
+  .inv-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 16px;
+  }
+  .inv-price {
+    font-weight: 900;
+    font-size: 100px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: white;
+    margin-bottom: 4px;
+    position: relative; z-index: 1;
+  }
+  .inv-period {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 50px;
+    position: relative; z-index: 1;
+  }
+  .inv-terms-row {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    position: relative; z-index: 1;
+  }
+  .inv-term-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 6px;
+  }
+  .inv-term-val {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* ─── NOTES ─── */
+  .notes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-top: 40px;
+  }
+  .note-card {
+    background: white;
+    padding: 24px 26px;
+    border-left: 4px solid var(--purple);
+    font-size: 12.5px;
+    color: rgba(31,27,55,0.65);
+    line-height: 1.7;
+  }
+  .note-card:nth-child(2) { border-color: var(--orange); }
+  .note-card:nth-child(3) { border-color: var(--pink); }
+  .note-card:nth-child(4) { border-color: var(--lime); }
+
+  /* ─── CLOSING ─── */
+  .closing {
+    background: var(--dark-navy);
+    padding: 100px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .closing::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(123,58,206,0.15), transparent 70%);
+    pointer-events: none;
+  }
+  .closing-name {
+    font-weight: 900;
+    font-size: clamp(36px, 7vw, 80px);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 14px;
+    position: relative; z-index: 1;
+  }
+  .closing-name .brush { color: var(--purple); }
+  .closing-name .art { color: var(--cream); }
+  .closing-tagline {
+    font-size: 14px;
+    font-style: italic;
+    color: rgba(245,240,224,0.45);
+    margin-bottom: 50px;
+    position: relative; z-index: 1;
+  }
+  .accept-btn {
+    display: inline-block;
+    background: var(--orange);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 18px 48px;
+    border-radius: 100px;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative; z-index: 1;
+  }
+  .accept-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(239,125,0,0.4);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 680px) {
+    .cover { padding: 40px 24px 36px; }
+    .section { padding: 60px 24px; }
+    .obj-grid, .deliv-row, .scope-cols, .eq-grid, .notes-grid { grid-template-columns: 1fr; }
+    .inv-terms-row { flex-direction: column; gap: 24px; }
+    .inv-price { font-size: 72px; }
+    .investment-main { padding: 50px 30px; }
+    .closing { padding: 80px 30px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ COVER ═══════════════════════════════ -->
+<div class="cover">
+  <div class="cover-bg-blob"></div>
+  <div class="cover-bg-blob2"></div>
+
+  <div class="cover-top">
+    <div>
+      <div class="logo-mark"><span class="brush">Brush</span><br>art!<span class="dot">●</span></div>
+      <div class="cover-badge">Studio</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:10px;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:rgba(245,240,224,0.3);">Proposal</div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:rgba(245,240,224,0.3);margin-top:4px;">2025</div>
+    </div>
+  </div>
+
+  <div class="cover-center">
+    <div class="cover-eyebrow">Premium Social Media Relaunch</div>
+    <div class="cover-title">THE<br>TONE<br><span class="highlight">ROOM</span></div>
+    <div class="cover-subtitle">One-Month Content Production &amp; Brand Relaunch</div>
+    <div>
+      <span class="cover-pill">9 Reels · 10 Static Posts · Profile Optimization</span>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-bottom-label">Prepared by Brush art! Studio</div>
+    <div class="cover-channels">
+      <span class="channel-tag active">Instagram</span>
+      <span class="channel-tag active">TikTok</span>
+      <span class="channel-tag active">Google Business</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ INTRO ═══════════════════════════════ -->
+<div class="section">
+  <div class="section-tag"><span class="section-tag-num">01</span> Introduction</div>
+  <h2 class="section-title">We <span class="accent">Elevate</span><br>Brands.</h2>
+  <p class="section-body">Brush art! Studio is excited to collaborate with THE TONE ROOM in the relaunch and elevation of its digital presence through high-quality visual content, social media strategy, and modern branding direction.</p>
+  <p class="section-body" style="margin-top:16px;">The goal of this project is to create a premium and professional online image that helps THE TONE ROOM attract new clients, strengthen brand perception, and increase engagement across Instagram, TikTok, and Google Business.</p>
+</div>
+<div class="divider" style="margin:0 50px;"></div>
+
+<!-- ═══════════════════════════════ OBJECTIVES ═════════════════════════ -->
+<div class="section">
+  <div class="section-tag"><span class="section-tag-num">02</span> Project Objectives</div>
+  <h2 class="section-title">What We'll<br><span class="accent">Achieve</span></h2>
+  <div class="obj-grid">
+    <div class="obj-card">
+      <div class="obj-n">01</div>
+      <div class="obj-text">Relaunch THE TONE ROOM's social media with a fresh, premium identity</div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-n">02</div>
+      <div class="obj-text">Create high-quality visual content for Instagram and TikTok</div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-n">03</div>
+      <div class="obj-text">Improve online appearance and brand perception across all digital platforms</div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-n">04</div>
+      <div class="obj-text">Increase audience engagement through professional reels and static content</div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-n">05</div>
+      <div class="obj-text">Refresh and optimize the Google Business profile</div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-n">06</div>
+      <div class="obj-text">Establish a consistent premium visual identity for the brand</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ DELIVERABLES ═══════════════════════ -->
+<div style="background:white; padding: 80px 0;">
+  <div class="section" style="padding-top:0;padding-bottom:0;">
+    <div class="section-tag"><span class="section-tag-num" style="background:var(--orange);">03</span> Deliverables</div>
+    <h2 class="section-title">What's<br><span class="accent">Included</span></h2>
+    <div class="deliv-row">
+      <div class="deliv-card">
+        <div class="deliv-num">9</div>
+        <div class="deliv-name">Professional Reels</div>
+        <div class="deliv-desc">Cinematic, on-trend video content for Instagram &amp; TikTok</div>
+      </div>
+      <div class="deliv-card">
+        <div class="deliv-num">10</div>
+        <div class="deliv-name">Premium Static Posts</div>
+        <div class="deliv-desc">Branded graphics, promos, before &amp; afters, and more</div>
+      </div>
+      <div class="deliv-card">
+        <div class="deliv-num" style="font-size:64px;padding-top:8px;">∞</div>
+        <div class="deliv-name">Profile Optimization</div>
+        <div class="deliv-desc">Instagram, TikTok &amp; Google Business fully relaunched</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ CONTENT SCOPE ══════════════════════ -->
+<div class="section">
+  <div class="section-tag"><span class="section-tag-num">04</span> Creative Scope</div>
+  <h2 class="section-title">Content<br><span class="accent">Direction</span></h2>
+  <div class="scope-cols">
+    <div class="scope-col">
+      <div class="scope-col-head">Reel <span>Content</span></div>
+      <div class="scope-divider"></div>
+      <ul class="scope-list">
+        <li>Hair transformations</li>
+        <li>Client experience content</li>
+        <li>Behind-the-scenes footage</li>
+        <li>Cinematic salon visuals</li>
+        <li>Trending reel styles</li>
+        <li>Talking content with wireless mics</li>
+        <li>Beauty &amp; lifestyle visuals</li>
+        <li>Promotional &amp; branding content</li>
+      </ul>
+    </div>
+    <div class="scope-col">
+      <div class="scope-col-head">Static <span>Posts</span></div>
+      <div class="scope-divider"></div>
+      <ul class="scope-list">
+        <li>Branding visuals</li>
+        <li>Promotional graphics</li>
+        <li>Before &amp; after posts</li>
+        <li>Service highlights</li>
+        <li>Beauty quotes &amp; engagement posts</li>
+        <li>Informational &amp; marketing designs</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="divider" style="margin:0 50px;"></div>
+
+<!-- ═══════════════════════════════ EQUIPMENT ══════════════════════════ -->
+<div class="section">
+  <div class="section-tag"><span class="section-tag-num" style="background:var(--pink);">05</span> Equipment</div>
+  <h2 class="section-title">Cinematic<br><span class="accent">Quality</span></h2>
+  <p class="section-body">Professional-grade equipment ensures every frame of your content looks exceptional — setting THE TONE ROOM apart from the competition.</p>
+  <div class="eq-grid">
+    <div class="eq-card">
+      <div class="eq-dot">📷</div>
+      <div>
+        <div class="eq-title">Canon Professional Camera</div>
+        <div class="eq-sub">High-resolution stills &amp; cinematic video</div>
+      </div>
+    </div>
+    <div class="eq-card">
+      <div class="eq-dot">🎬</div>
+      <div>
+        <div class="eq-title">DJI Osmo Pocket</div>
+        <div class="eq-sub">Smooth stabilized footage for reels</div>
+      </div>
+    </div>
+    <div class="eq-card">
+      <div class="eq-dot">🚁</div>
+      <div>
+        <div class="eq-title">DJI Avata Drone</div>
+        <div class="eq-sub">Aerial &amp; cinematic dynamic shots</div>
+      </div>
+    </div>
+    <div class="eq-card">
+      <div class="eq-dot">🎙️</div>
+      <div>
+        <div class="eq-title">Wireless Microphones</div>
+        <div class="eq-sub">Crystal-clear audio for talking content</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PROCESS ════════════════════════════ -->
+<div class="band">
+  <div class="section">
+    <div class="section-tag"><span class="section-tag-num">06</span> Our Process</div>
+    <h2 class="section-title">How We<br><span class="accent">Work</span></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-circle">1</div>
+        <div class="step-body">
+          <div class="step-title">Initial Creative Meeting</div>
+          <div class="step-text">A virtual session to align on your vision, brand expectations, desired aesthetic, marketing goals, and target audience. This ensures every piece of content serves your brand identity.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-circle">2</div>
+        <div class="step-body">
+          <div class="step-title">Production Planning &amp; Scheduling</div>
+          <div class="step-text">We coordinate filming dates, content sessions, and a production calendar so the entire workflow is efficient and stress-free for your team.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-circle">3</div>
+        <div class="step-body">
+          <div class="step-title">Creative Scripts &amp; Content Prep</div>
+          <div class="step-text">Before filming, we provide reel concepts, dialogue guidance, scene planning, and content flow suggestions to maximize production quality on the day.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-circle">4</div>
+        <div class="step-body">
+          <div class="step-title">Editing &amp; Content Delivery</div>
+          <div class="step-text">Post-production begins immediately after filming. Content previews are shared for your approval, adjustments are made, and final deliverables are handed off on schedule.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-circle">5</div>
+        <div class="step-body">
+          <div class="step-title">Posting Calendar &amp; Organization</div>
+          <div class="step-text">A structured posting calendar with suggested dates and scheduling for every reel and static post — keeping your content consistent and your brand presence strong.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ INVESTMENT ═════════════════════════ -->
+<div class="section">
+  <div class="section-tag"><span class="section-tag-num" style="background:var(--orange);">07</span> Investment</div>
+  <h2 class="section-title">Project<br><span class="accent">Investment</span></h2>
+  <div class="investment-wrap">
+    <div class="investment-main">
+      <div class="inv-tag">Total Project Investment</div>
+      <div class="inv-price">$1,000</div>
+      <div class="inv-period">One Month · All Deliverables Included</div>
+      <div class="inv-terms-row">
+        <div>
+          <div class="inv-term-label">Deposit</div>
+          <div class="inv-term-val">Required before production begins</div>
+        </div>
+        <div>
+          <div class="inv-term-label">Balance</div>
+          <div class="inv-term-val">Due upon completion or agreed schedule</div>
+        </div>
+        <div>
+          <div class="inv-term-label">Add-ons</div>
+          <div class="inv-term-val">Additional services quoted separately</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="divider" style="margin:0 50px;"></div>
+
+<!-- ═══════════════════════════════ NOTES ══════════════════════════════ -->
+<div class="section">
+  <div class="section-tag"><span class="section-tag-num" style="background:var(--lime);color:var(--dark-navy);">08</span> Good to Know</div>
+  <h2 class="section-title">Additional<br><span class="accent">Notes</span></h2>
+  <div class="notes-grid">
+    <div class="note-card">This proposal covers content creation and visual production services only.</div>
+    <div class="note-card">Daily social media management and paid advertising are not included unless agreed separately.</div>
+    <div class="note-card">Drone usage may depend on weather conditions and location restrictions.</div>
+    <div class="note-card">All content is developed under client approval while maintaining the agreed creative and branding direction.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ CLOSING ════════════════════════════ -->
+<div class="closing">
+  <div class="closing-name"><span class="brush">Brush</span> <span class="art">art!</span></div>
+  <div class="closing-tagline">"We don't just create content. We elevate brands."</div>
+  <button class="accept-btn">Accept This Proposal</button>
+</div>
+
+</body>
+</html>
